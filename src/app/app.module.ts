@@ -7,10 +7,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormDataComponent } from './form-data/form-data.component';
+import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatTableModule} from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -18,7 +23,8 @@ import {MatTableModule} from '@angular/material/table';
     AppComponent,
     LoginComponent,
     NavBarComponent,
-    FormDataComponent
+    FormDataComponent,
+    AddInvoiceComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +32,14 @@ import {MatTableModule} from '@angular/material/table';
     FormsModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginator,
+    MatPaginatorModule,
+    MatSort,
+    MatSortModule,
+    MatTableDataSource,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

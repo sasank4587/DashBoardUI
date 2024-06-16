@@ -1,32 +1,116 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InformationObject } from '../model/infromation-object.model';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 const ELEMENT_DATA: InformationObject[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  {
+    id: 1,
+    invoiceId: 'invoice001',
+    invoiceDate: new Date('2023-10-27'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dal',
+    productSize: '2LB',
+    productQuantity: 10,
+    expirationDate: new Date('2023-12-31')
+  },
+  {
+    id: 2,
+    invoiceId: 'invoice002',
+    invoiceDate: new Date('2023-10-28'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dal',
+    productSize: '2LB',
+    productQuantity: 10,
+    expirationDate: new Date('2023-12-31')
+  },
+  {
+    id: 3,
+    invoiceId: 'invoice001',
+    invoiceDate: new Date('2023-10-28'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dal',
+    productSize: '4LB',
+    productQuantity: 10,
+    expirationDate: new Date('2023-12-31')
+  },
+  {
+    id: 4,
+    invoiceId: 'invoice002',
+    invoiceDate: new Date('2024-06-12'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dal',
+    productSize: '4LB',
+    productQuantity: 10,
+    expirationDate: new Date('2023-12-31')
+  },
+  {
+    id: 5,
+    invoiceId: 'invoice006',
+    invoiceDate: new Date('2024-06-12'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dalle',
+    productSize: '4LB',
+    productQuantity: 10,
+    expirationDate: new Date('2023-12-31')
+  },
+  {
+    id: 6,
+    invoiceId: 'invoice006',
+    invoiceDate: new Date('2024-06-12'),
+    vendorName: 'laxmi',
+    brandName: 'laxmi',
+    productName: 'Moong Dalle',
+    productSize: '4LB',
+    productQuantity: 20,
+    expirationDate: new Date('2024-08-31')
+  }
 ];
+
 
 @Component({
   selector: 'app-form-data',
   templateUrl: './form-data.component.html',
-  styleUrls: ['./form-data.component.css']
+  styleUrls: ['./form-data.component.css'],
 })
 export class FormDataComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['invoiceId', 'invoiceDate', 'vendorName', 'brandName', 'productName', 'productSize', 'productQuantity', 'expirationDate'];
+  dataSource: MatTableDataSource<InformationObject>;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor() { 
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  }
+
+  formatDate(date) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
