@@ -1,3 +1,59 @@
 table {
-    width: 100%;
-  }
+  border-top: 1px solid black;
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-column-invoiceId {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-invoiceDate {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-vendorName {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-brandName {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-productName {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-productSize {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-productQuantity {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.mat-column-expirationDate {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+
+::ng-deep .mat-option-text {
+  margin-left: 76.6%;
+  /* text-align: justify;
+  position: relative; */
+  display: inline-block;
+  position: absolute;
+}

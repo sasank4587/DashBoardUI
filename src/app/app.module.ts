@@ -11,9 +11,9 @@ import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
@@ -33,11 +33,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ReactiveFormsModule,
     MatExpansionModule,
     MatTableModule,
-    MatPaginator,
     MatPaginatorModule,
-    MatSort,
     MatSortModule,
-    MatTableDataSource,
     MatInputModule,
     MatFormFieldModule
   ],

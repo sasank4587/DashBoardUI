@@ -2,13 +2,13 @@
     <app-nav-bar class="top"></app-nav-bar>
 </div>
 
-<mat-form-field>
+<!-- <mat-form-field>
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field>
+</mat-form-field> -->
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" style="margin-top: 5%;" matSort>
+<div class="mat-elevation-z8" style="margin-left: 3%; margin-right: 3%; margin-top: 5%;">
+  <table mat-table [dataSource]="dataSource" matSort>
   
     <ng-container matColumnDef="invoiceId">
       <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
@@ -57,8 +57,11 @@
       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
     </tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+    </mat-paginator>
 </div>
 
   
