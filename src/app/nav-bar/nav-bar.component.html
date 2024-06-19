@@ -23,18 +23,18 @@
         <li class="nav-item"><a class="nav-link" href="/form-data">Form</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <div *ngIf="firstName" class="dropDown">
+        <!-- <div *ngIf="firstName" class="dropDown">
           <li class="dropdown">
             <button class="dropbtn">{{name}}</button>
             <div class="dropdown-content">
-              <!-- <a href="/profile">Profile</a>
+              <a href="/profile">Profile</a>
               <a href="/user-deals">Deals</a>
               <a href="/payment-methods">Payment</a>
-              <a href="/history">History</a> -->
+              <a href="/history">History</a>
               <a href="/login" (click)="logout()">Logout</a>
             </div>
           </li>
-        </div>
+        </div> -->
         <div *ngIf="!firstName" class="dropDown">
           <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
         </div>
