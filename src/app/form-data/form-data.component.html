@@ -2,12 +2,46 @@
     <app-nav-bar class="top"></app-nav-bar>
 </div>
 
-<!-- <mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field> -->
+    <div class="card" style="margin-top: 3%; margin-left: 3%; margin-right: 3%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-3">
+            <input type="text" class="form-control" [(ngModel)]="filterObj.InvocieId" placeholder="Search By invoiceId">
+          </div>
+          <div class="col-3">
+            <app-my-button [text]="'Search'" [btnClass]="'btn-sm btn-success'" (onBtnClick)="fetchProducts()"> </app-my-button>
+    
+            <button class="btn btn-dark mx-1 btn-success" (click)="fetchProducts()">Search</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1%;">
+          <div class="col-2">
+            <div class="dataTables_length"><label>Show
+                <select [(ngModel)]="filterObj.PageSize" (change)="fetchProducts()">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select> entries</label>
+            </div>
+          </div>
+          <div class="col-md-10" style="float:right;text-align: right">
+            <div class="paginations">
+              <div>
+                <div class="btn-group" id="radioBtn">
+                  <a class="btn btn-primary btn-dark notActive" *ngIf="!first" (click)="onPrevious()"> Previous </a>
+                  <a class="btn btn-primary btn-dark active">{{filterObj.PageNumber}}</a>
+                  <a class="btn btn-primary btn-dark notActive" *ngIf="!last" (click)="onNext()">Next </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="mat-elevation-z8 custom-table-container" style="margin-left: 3%; margin-right: 3%; margin-top: 5%;">
+<div class="mat-elevation-z8 custom-table-container" style="margin-left: 3%; margin-right: 3%;">
   <table mat-table [dataSource]="dataSource" matSort class="custom-table">
   
     <ng-container matColumnDef="invoiceId">
@@ -16,8 +50,8 @@
     </ng-container>
   
     <ng-container matColumnDef="invoiceDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Invocie Date </th>
-      <td mat-cell *matCellDef="let element"> {{formatDate(element.invoiceDate)}} </td>
+      <th mat-header-cell *matHeaderCellDef> Invocie Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.invoiceDate}} </td>
     </ng-container>
   
     <ng-container matColumnDef="vendorName">
@@ -46,8 +80,13 @@
     </ng-container>
 
     <ng-container matColumnDef="expirationDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </th>
-      <td mat-cell *matCellDef="let element"> {{formatDate(element.expirationDate)}} </td>
+      <th mat-header-cell *matHeaderCellDef> Expiration Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.expirationDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="invoiceStatus">
+      <th mat-header-cell *matHeaderCellDef> Invoice Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.invoiceStatus}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -58,12 +97,8 @@
     </tr>
   </table>
 </div>
-<!-- <mat-paginator [length]="500"
-              [pageSize]="5"
-              aria-label="Select page" style="margin-right: 5%;">
-</mat-paginator> -->
 
-<mat-paginator [length]="500" [pageSize]="10" aria-label="Select page" class="custom-paginator"></mat-paginator>
+
 
 
   

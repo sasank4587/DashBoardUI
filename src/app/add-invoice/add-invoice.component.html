@@ -2,86 +2,142 @@
     <app-nav-bar class="top"></app-nav-bar>
 </div>
 
+<div class="mat-elevation-z8 custom-table-container" *ngIf="showProducts" style="margin-left: 3%; margin-right: 3%; margin-top: 5%;">
+    <table mat-table [dataSource]="dataSource" class="custom-table">
+    
+      <ng-container matColumnDef="invoiceId">
+        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceId}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="invoiceDate">
+        <th mat-header-cell *matHeaderCellDef> Invocie Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceDate}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="vendorName">
+        <th mat-header-cell *matHeaderCellDef> Vendor Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.vendorName}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="brandName">
+        <th mat-header-cell *matHeaderCellDef> Brand Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.brandName}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef> Product Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="productSize">
+        <th mat-header-cell *matHeaderCellDef> Size </th>
+        <td mat-cell *matCellDef="let element"> {{element.productSize}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="productQuantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element"> {{element.productQuantity}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="expirationDate">
+        <th mat-header-cell *matHeaderCellDef> Expiration Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.expirationDate}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+</div>
+
 <section class="vh-100" >
     <div class="container py-5" >
         <div class="rowjustify-content-center" style="border-radius: 15px; margin-left:10% ; margin-right:10% ;">
                 <div class="card mb-3" style="border-radius: 15px;" >
                     <div class="card-body p-4">
                         <div class="text-black">
-                            <div class="flex-grow-1 ms-3">
+                            <div class="container">
                                 <h3 class="mb-2 pb-1" >Add Invoice Details</h3>
-                                <div class="rounded-3 p-2 mb-2" >
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Invoice Id</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['invoiceId']"
-                                            #invoiceId type="text" name="invoiceId" placeholder="Enter the Invocie ID">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Invoice Id</h5>
+                                            </label>
+                                            <ng-container *ngIf="showProducts; else editMode">
+                                                <!-- Static Value Display -->
+                                                <div class="form-control-static" style="margin-bottom: 5%;">
+                                                    {{ invoiceID }}
+                                                </div>
+                                            </ng-container>
+                                            <ng-template #editMode>
+                                                <!-- Input Field for Editing -->
+                                                <input class="mb-2 form-control" [formControl]="myFormGroup.controls['invoiceId']" #invoiceId type="text" name="invoiceId" placeholder="Enter the Invoice ID">
+                                            </ng-template>
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Invoice Date</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['invoiceDate']" #invoiceDate type="date" name="invoiceDate" placeholder="Enter your Invoice Date">
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Vendor Name</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['vendorName']" #vendorName type="text" name="vendorName" placeholder="Enter the Vendor Name">
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Brand Name</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['brandName']" #brandName type="text" name="brandName" placeholder="Enter the Brand Name">
+                                        </div>
                                     </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Invoice Date</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['invoiceDate']"
-                                            #invoiceDate type="date" name="invoiceDate" placeholder="Enter your Invoice Date">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Vendor Name</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['vendorName']" #vendorName
-                                            type="text" name="vendorName" placeholder="Enter the Vendor Name">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Brand Name</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['brandName']" #brandName
-                                            type="text" name="brandName" placeholder="Enter the Brand Name">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Product Name</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['productName']" #productName
-                                            type="text" name="productName" placeholder="Enter the Product Name">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Size</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['size']" #size
-                                            type="text" name="size" placeholder="Size">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Quantity</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['quantity']" #quantity
-                                            type="number" name="quantity" placeholder="Quantity">
-                                    </div>
-
-                                    <div class="form-group row px-3">
-                                        <label class="mb-0">
-                                            <h5 class="mb-0 text-sm">Expiration Date</h5>
-                                        </label>
-                                        <input class="mb-2 form-control" [formControl]="myFormGroup.controls['expiryDate']"
-                                            #expiryDate type="date" name="expiryDate" placeholder="Enter your expiryDate">
+                                    <div class="col-md-6">
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Product Name</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['productName']" #productName type="text" name="productName" placeholder="Enter the Product Name">
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Size</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['size']" #size type="text" name="size" placeholder="Size">
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Quantity</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['quantity']" #quantity type="number" name="quantity" placeholder="Quantity">
+                                        </div>
+                            
+                                        <div class="form-group row px-3">
+                                            <label class="mb-0">
+                                                <h5 class="mb-0 text-sm">Expiration Date</h5>
+                                            </label>
+                                            <input class="mb-2 form-control" [formControl]="myFormGroup.controls['expiryDate']" #expiryDate type="date" name="expiryDate" placeholder="Enter your expiryDate">
+                                        </div>
                                     </div>
                                 </div>
-                                
-                            </div>
+                            </div>   
                         </div>
                     </div>
                 </div>
-                <div class="d-flex pt-1" style="margin-left:80% ;">
-                    <button type="button" class="btn btn-dark flex-grow-1" (click)="add()">Add</button>
+                <div class="d-flex pt-1 justify-content-end" style="text-align: center;">
+                    <button type="button" class="btn btn-dark mx-1" (click)="save('OPEN')">Save And Continue</button>
+                    <button type="button" class="btn btn-dark mx-1" (click)="save('CLOSED')">Finish</button>
                 </div>
         </div>
 

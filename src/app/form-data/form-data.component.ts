@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InformationObject } from '../model/infromation-object.model';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { ProductInvoiceResponse } from '../model/product-invoice-response.model';
+import { ProductInvoiceService } from '../services/product-service/product-invoice.service';
 
 const ELEMENT_DATA: InformationObject[] = [
   {
@@ -302,14 +302,37 @@ const ELEMENT_DATA: InformationObject[] = [
 })
 export class FormDataComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoiceId', 'invoiceDate', 'vendorName', 'brandName', 'productName', 'productSize', 'productQuantity', 'expirationDate'];
-  dataSource: MatTableDataSource<InformationObject>;
+  displayedColumns: string[] = ['invoiceId', 'invoiceDate', 'vendorName', 'brandName', 'productName', 'productSize', 'productQuantity', 'expirationDate', 'invoiceStatus'];
+  dataSource: any;
+  invoiceProductsList : Array<ProductInvoiceResponse>;
+  filterObj = {
+    "InvocieId": "",
+    "PageNumber": 1,
+    "PageSize": 10
+  }
+  first : boolean = false;
+  last : boolean = false;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { 
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  constructor(public productService : ProductInvoiceService) {
+    this.fetchProducts();
+  }
+
+  fetchProducts(){
+    this.productService.getFilteredProducts(this.filterObj.InvocieId, this.filterObj.PageNumber, this.filterObj.PageSize).subscribe(response =>{
+      console.log(response);
+      this.invoiceProductsList = response.content;
+      this.first = response.first;
+      this.last = response.last;
+      console.log("first:")
+      console.log(this.first)
+      console.log("last:")
+      console.log(this.last)
+      console.log('Product Response');
+      console.log(this.invoiceProductsList);
+      this.dataSource = new MatTableDataSource(this.invoiceProductsList);
+      console.log(this.dataSource);
+    });
   }
 
   formatDate(date) {
@@ -317,12 +340,19 @@ export class FormDataComponent implements OnInit {
     return date.toLocaleDateString('en-US', options);
   }
 
+  onPrevious() {
+    this.filterObj.PageNumber --;
+    this.fetchProducts();
+  }
+  onNext() {
+    this.filterObj.PageNumber ++;
+    this.fetchProducts();
+  }
+
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
