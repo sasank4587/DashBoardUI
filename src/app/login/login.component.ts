@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,19 @@ export class LoginComponent implements OnInit {
   nullValueErrorMessage: boolean = false;
   invalid: boolean = false;
 
-  constructor(formBuilder: FormBuilder, public router: Router,){
+  constructor(formBuilder: FormBuilder, public router: Router, public authService: AuthService){
+    sessionStorage.removeItem("addInvoiceId");
+    sessionStorage.removeItem("filterObj");
+    console.log('current URl ' + this.router.url);
+
+    // if(sessionStorage.getItem('currentUrl') != null){
+    //   sessionStorage.setItem('currentUrl', this.router.url);
+    // } else{
+    //   sessionStorage.setItem('previousUrl', sessionStorage.getItem('currentUrl'))
+    // }
+
+    // sessionStorage.setItem('currentUrl', this.router.url);
+
     this.myFormGroup = formBuilder.group({
       "email": new FormControl("", [Validators.required, Validators.email]),
       "password": new FormControl("", [Validators.required])
@@ -49,6 +62,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    console.log()
+    this.authService.loginWithRedirect();
     // if (this.myFormGroup.controls['email'].value.length != 0 && this.myFormGroup.controls['password'].value.length != 0) {
     //   // let userCredentials = new AuthenticationRequest(this.myFormGroup.controls['email'].value, this.myFormGroup.controls['password'].value)
     //   this.loginService.login(userCredentials).subscribe((successData) => {
@@ -68,7 +83,7 @@ export class LoginComponent implements OnInit {
     // else {
     //   this.nullValueErrorMessage = true;
     // }
-    this.router.navigate(['/form-data']);
+    // this.router.navigate(['/form-data']);
   }
 
 

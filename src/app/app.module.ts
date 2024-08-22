@@ -21,6 +21,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { invoiceReducer } from './store/invoice/invoice.reducer';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,10 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent
   ],
   imports: [
+    AuthModule.forRoot({
+      ...env.auth,
+    }),
+    StoreModule.forRoot({invoice : invoiceReducer}),
     BrowserModule,
     AppRoutingModule,
     FormsModule,

@@ -1,13 +1,42 @@
+
+
 <div>
     <app-nav-bar class="top"></app-nav-bar>
 </div>
-<div style="width: 50%; height: 50%; float: left;">
+<!-- <div style="width: 50%; height: 50%; float: left;">
     <canvasjs-chart [options]="chartOptions" [styles]="{width: '70%', height:'360px'}"></canvasjs-chart>    
 </div>
 <div style="width: 50%; height: 50%; float: right;">
     <canvasjs-chart [options]="chartOptions" [styles]="{width: '70%', height:'360px'}"></canvasjs-chart>    
-</div> 
+</div>  -->
 
-<!-- <div class="chart-container">
-    <canvas  id="MyChart" >{{ chart }}</canvas>
-</div> -->
+<div class="mat-elevation-z8 custom-table-container" style="margin-left: 3%; margin-right: 3%;">
+    <table mat-table [dataSource]="dataSource" matSort class="custom-table">
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="invoiceId">
+        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> <button type="button" class="btn btn-primary"
+                (click)="open(element.invoiceId);"><i class="fa fa-plus"></i>
+                Book</button> </td>
+    </ng-container>
+    
+      
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+  </div>

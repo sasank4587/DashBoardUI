@@ -36,6 +36,17 @@
                 </div>
               </div>
             </div>
+            <p> 
+              Showing {{(filterObj.PageNumber - 1) * filterObj.PageSize + 1}} - 
+              <span *ngIf="(filterObj.PageNumber - 1) * filterObj.PageSize + filterObj.PageSize < totalElements">
+                {{ ((filterObj.PageNumber - 1) * filterObj.PageSize + filterObj.PageSize) | number }}
+              </span>            
+              <span *ngIf="(filterObj.PageNumber - 1) * filterObj.PageSize + filterObj.PageSize >= totalElements">
+                  {{totalElements}}
+              </span>
+              out of {{totalElements}} 
+          </p>
+          
           </div>
         </div>
       </div>
@@ -43,6 +54,11 @@
 
 <div class="mat-elevation-z8 custom-table-container" style="margin-left: 3%; margin-right: 3%;">
   <table mat-table [dataSource]="dataSource" matSort class="custom-table">
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> # </th>
+      <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+    </ng-container>
   
     <ng-container matColumnDef="invoiceId">
       <th mat-header-cell *matHeaderCellDef> Invoice ID </th>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,21 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-   name : string;
+   name : any;
    firstName : string;
    lastName : string;
-  constructor() {}
+  constructor(public auth : AuthService, @Inject(DOCUMENT) private doc: Document,) {}
   
-  logout(){
-    console.log("logout called!")
-    sessionStorage.clear();
+  logout(): void {
+    this.auth.logout({ returnTo: this.doc.location.origin });
   }
   ngOnInit(): void {
    //localStorage.setItem('abc', 'sasank');
   //  this.name = localStorage.getItem('abc');
   this.firstName = sessionStorage.getItem('firstName');
   this.lastName = sessionStorage.getItem('lastName');
-   this.name = this.firstName+ " " + this.lastName;
+  console.log(this.auth)
+  this.auth.user$.subscribe(result=> {
+    console.log("test", result.name)
+    this.name = result.name
+});
 
   }
 

@@ -1,7 +1,10 @@
 import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Router } from 'express';
+import { Router } from '@angular/router';
+import { ProductInvoiceService } from '../services/product-service/product-invoice.service';
+import { InvoiceResponse } from '../model/invoice-response.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -10,6 +13,11 @@ import { Router } from 'express';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  displayedColumns: string[] = ['position', 'invoiceId', 'action'];
+  dataSource: any;
+
+  openInvoiceList : Array<InvoiceResponse>;
 
   // public chart: any;
 
@@ -117,7 +125,28 @@ export class DashboardComponent implements OnInit {
 	  }]                
     };
 
-  constructor() { }
+  constructor(public productService : ProductInvoiceService, public router: Router) {
+    sessionStorage.removeItem("addInvoiceId");
+    sessionStorage.removeItem("filterObj");
+    console.log('current URl ' + this.router.url);
+    this.getOpenInvoices();
+   }
+
+  getOpenInvoices(){
+    this.productService.getOpenInvoices().subscribe(response =>{
+      this.openInvoiceList = response;
+      console.log(this.openInvoiceList);
+      this.dataSource = new MatTableDataSource(this.openInvoiceList);
+      console.log(this.dataSource);
+    });
+  }
+
+  open(invoiceId : string){
+    localStorage.setItem("invoiceId", invoiceId);
+    this.router.navigate(['/add-invoice']);
+  }
+
+
 
   ngOnInit(): void {
     // this.createChart();

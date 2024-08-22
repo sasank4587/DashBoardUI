@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InformationObject } from '../model/infromation-object.model';
 import {MatTableDataSource} from '@angular/material/table';
 import { ProductInvoiceResponse } from '../model/product-invoice-response.model';
 import { ProductInvoiceService } from '../services/product-service/product-invoice.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 const ELEMENT_DATA: InformationObject[] = [
   {
@@ -302,7 +304,7 @@ const ELEMENT_DATA: InformationObject[] = [
 })
 export class FormDataComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoiceId', 'invoiceDate', 'vendorName', 'brandName', 'productName', 'productSize', 'productQuantity', 'expirationDate', 'invoiceStatus'];
+  displayedColumns: string[] = ['position', 'invoiceId', 'invoiceDate', 'vendorName', 'brandName', 'productName', 'productSize', 'productQuantity', 'expirationDate', 'invoiceStatus'];
   dataSource: any;
   invoiceProductsList : Array<ProductInvoiceResponse>;
   filterObj = {
@@ -310,20 +312,37 @@ export class FormDataComponent implements OnInit {
     "PageNumber": 1,
     "PageSize": 10
   }
+  totalElements : number = 0;
   first : boolean = false;
   last : boolean = false;
 
 
-  constructor(public productService : ProductInvoiceService) {
+  constructor(public productService : ProductInvoiceService,  public router: Router, public auth: AuthService) {
+    sessionStorage.removeItem("addInvoiceId");
+    console.log('current URl ' + this.router.url);
+    this.loadFilterObj();
     this.fetchProducts();
   }
 
+  loadFilterObj() {
+    const storedFilterObj = sessionStorage.getItem('filterObj');
+    if (storedFilterObj) {
+      this.filterObj = JSON.parse(storedFilterObj);
+    }
+  }
+
+  saveFilterObj() {
+    sessionStorage.setItem('filterObj', JSON.stringify(this.filterObj));
+  }
+
   fetchProducts(){
+    this.saveFilterObj();
     this.productService.getFilteredProducts(this.filterObj.InvocieId, this.filterObj.PageNumber, this.filterObj.PageSize).subscribe(response =>{
       console.log(response);
       this.invoiceProductsList = response.content;
       this.first = response.first;
       this.last = response.last;
+      this.totalElements = response.totalElements;
       console.log("first:")
       console.log(this.first)
       console.log("last:")
@@ -342,10 +361,12 @@ export class FormDataComponent implements OnInit {
 
   onPrevious() {
     this.filterObj.PageNumber --;
+    this.saveFilterObj();
     this.fetchProducts();
   }
   onNext() {
     this.filterObj.PageNumber ++;
+    this.saveFilterObj();
     this.fetchProducts();
   }
 

@@ -52,6 +52,9 @@
         <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
       </tr>
     </table>
+    <div class="d-flex pt-1 justify-content-end" style="text-align: center;">
+        <button type="button" class="btn btn-dark mx-1" (click)="finish()">Finish</button>
+    </div>
 </div>
 
 <section class="vh-100" >
@@ -136,8 +139,7 @@
                     </div>
                 </div>
                 <div class="d-flex pt-1 justify-content-end" style="text-align: center;">
-                    <button type="button" class="btn btn-dark mx-1" (click)="save('OPEN')">Save And Continue</button>
-                    <button type="button" class="btn btn-dark mx-1" (click)="save('CLOSED')">Finish</button>
+                    <button type="button" class="btn btn-dark mx-1" (click)="save()">Save And Continue</button>
                 </div>
         </div>
 

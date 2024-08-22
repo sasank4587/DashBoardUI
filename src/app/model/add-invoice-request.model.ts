@@ -7,10 +7,9 @@ export class AddInvoiceRequest{
     productSize : string;
     productQuantity : number;
     expirationDate : Date;
-    status : string;
     
 
-    constructor(invoiceId, invoiceDate, vendorName, brandName, productName, productSize, productQuantity, expirationDate, status){
+    constructor(invoiceId, invoiceDate, vendorName, brandName, productName, productSize, productQuantity, expirationDate){
         this.invoiceId = invoiceId;
         this.invoiceDate = invoiceDate;
         this.vendorName = vendorName;
@@ -19,6 +18,5 @@ export class AddInvoiceRequest{
         this.productSize = productSize;
         this.productQuantity = productQuantity;
         this.expirationDate = expirationDate;
-        this.status = status;
     }
 }

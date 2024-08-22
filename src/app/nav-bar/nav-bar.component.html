@@ -16,7 +16,7 @@
 
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/home">DashBoard</a>
+        <a class="navbar-brand" href="/dashboard">DashBoard</a>
       </div>
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="/dashboard">DashBoard</a></li>
@@ -24,21 +24,21 @@
         <li class="nav-item"><a class="nav-link" href="/form-data">Form</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <!-- <div *ngIf="firstName" class="dropDown">
+        <div *ngIf="auth.isAuthenticated$" class="dropDown">
           <li class="dropdown">
             <button class="dropbtn">{{name}}</button>
             <div class="dropdown-content">
-              <a href="/profile">Profile</a>
+              <!-- <a href="/profile">Profile</a>
               <a href="/user-deals">Deals</a>
               <a href="/payment-methods">Payment</a>
-              <a href="/history">History</a>
-              <a href="/login" (click)="logout()">Logout</a>
+              <a href="/history">History</a> -->
+              <a (click)="logout()">Logout</a>
             </div>
           </li>
-        </div> -->
-        <div *ngIf="!firstName" class="dropDown">
-          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
         </div>
+        <!-- <div *ngIf="auth.isAuthenticated$" class="dropDown">
+          <li class="nav-item"><button class="btn btn-danger btn-block" (click)="logout()">Log out</button></li>
+        </div> -->
       </ul>
 
     </div>
