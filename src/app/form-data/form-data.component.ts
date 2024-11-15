@@ -321,6 +321,7 @@ export class FormDataComponent implements OnInit {
     sessionStorage.removeItem("addInvoiceId");
     console.log('current URl ' + this.router.url);
     this.loadFilterObj();
+    console.log(this.filterObj);
     this.fetchProducts();
   }
 
@@ -336,6 +337,7 @@ export class FormDataComponent implements OnInit {
   }
 
   fetchProducts(){
+    console.log("Fetching products")
     this.saveFilterObj();
     this.productService.getFilteredProducts(this.filterObj.InvocieId, this.filterObj.PageNumber, this.filterObj.PageSize).subscribe(response =>{
       console.log(response);

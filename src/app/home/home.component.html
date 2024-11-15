@@ -1,0 +1,20 @@
+<div>
+    <app-nav-bar class="top"></app-nav-bar>
+</div>
+
+<div *ngIf="isLogin">
+    <a>Welcome, User!</a>
+    <!-- <div class="user-options" style="margin-left: 3%;">
+        <h2>Welcome, User!</h2>
+        <p>Select an option below to proceed:</p>
+        <div class="buttons">
+            <button (click)="navigateToPage1()">Meat</button>
+            <button (click)="navigateToPage2()">Grocery</button>
+            <button (click)="navigateToPage3()">Vegetables</button>
+        </div>
+    </div> -->
+</div>
+
+<div *ngIf="!isLogin">
+    <a>Please Login to access the website</a>
+</div>

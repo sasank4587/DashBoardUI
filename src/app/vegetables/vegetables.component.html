@@ -1,0 +1,81 @@
+<div>
+    <app-nav-bar class="top"></app-nav-bar>
+</div>
+
+<h1>Vegetables Inventory Management</h1>
+
+<!-- Options at the top of the page -->
+<div class="options">
+    <button mat-raised-button color="primary" (click)="setOption('view')">View Inventory</button>
+    <button mat-raised-button color="accent" (click)="setOption('update')">Update Inventory</button>
+    <button mat-raised-button color="warn" (click)="setOption('add')">Add New Category</button>
+</div>
+
+<!-- View Inventory Option -->
+<div *ngIf="selectedOption === 'view'" class="inventory-section">
+    <h2>Current Meat Inventory</h2>
+    <mat-table [dataSource]="currentDataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="entry">
+            <mat-header-cell *matHeaderCellDef> Vegetable Category </mat-header-cell>
+            <mat-cell *matCellDef="let vegetable"> {{ vegetable.entry }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="count">
+            <mat-header-cell *matHeaderCellDef> Current Inventory </mat-header-cell>
+            <mat-cell *matCellDef="let vegetable"> {{ vegetable.count }} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+
+<!-- Update Inventory Option -->
+<div *ngIf="selectedOption === 'update'" class="inventory-section">
+    <h2>Update Meat Inventory</h2>
+    <mat-table [dataSource]="tempInventoryCountList" class="mat-elevation-z8">
+        <ng-container matColumnDef="entry">
+            <mat-header-cell *matHeaderCellDef> Vegetable Category </mat-header-cell>
+            <mat-cell *matCellDef="let vegetable"> {{ vegetable.entry }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="count">
+            <mat-header-cell *matHeaderCellDef> Current Count </mat-header-cell>
+            <mat-cell *matCellDef="let vegetable"> 
+                <input matInput type="number" [(ngModel)]="vegetable.count" />
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let vegetable">
+                <div class="update-controls">
+                    <button mat-icon-button color="primary" (click)="changeCount(vegetable, -1)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="changeCount(vegetable, 1)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="updateColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: updateColumns;"></mat-row>
+    </mat-table>
+    <button mat-raised-button color="primary" (click)="submitUpdates()">Submit Changes</button>
+</div>
+
+<!-- Add New Category Option -->
+<div *ngIf="selectedOption === 'add'">
+    <h2>Add New Vegetable Category</h2>
+    <div style="margin-top: 2%;">
+        <label>Category Name: </label>
+        <input [(ngModel)]="newCategory.name" placeholder="Enter category name">
+    </div>
+    <div style="margin-top: 2%;">
+        <label>Initial Count: </label>
+        <input [(ngModel)]="newCategory.count" type="number" placeholder="Enter initial count">
+    </div>
+    <button mat-raised-button color="primary" (click)="saveCategory()">Add Category</button>
+</div>

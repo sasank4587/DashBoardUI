@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {map} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { AddInvoiceRequest } from 'src/app/model/add-invoice-request.model';
-import { ProductListResponse } from 'src/app/model/product-list-response.model';
+import { Observable } from 'rxjs';
 
 const ADD_URL = "http://localhost:8090/products/add";
 const CLOSE_URL = "http://localhost:8090/products/status";
@@ -15,56 +15,48 @@ const OPEN_INVOICE_URL = "http://localhost:8090/products/open/invoices";
   providedIn: 'root'
 })
 export class ProductInvoiceService {
-  test: Array<{firstName:string, lastName:string}> = [];
-  constructor(public http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-
-  add(details : AddInvoiceRequest):any{
-    return this.http.post(ADD_URL,details).pipe(
-      map((successData : Response)=>{
+  add(details: AddInvoiceRequest): any {
+    return this.http.post(ADD_URL, details).pipe(
+      map((successData: Response) => {
         console.log(successData); 
         return successData;
       }),
-      map(failureData=>{
+      map(failureData => {
         console.log(failureData);
         return failureData;
       })
     );
   }
 
-  getProductDetailsFromInvoiceId(invoiceId : string) : any{
-    console.log(invoiceId);
-    return this.http.get<any>(API_URL+"/"+invoiceId)
+  getProductDetailsFromInvoiceId(invoiceId: string): any {
+    return this.http.get<any>(`${API_URL}/${invoiceId}`);
   }
 
-  getAllProducts() : any{
-    return this.http.get<any>(PRODUCTS_URL)
+  getAllProducts(): any {
+    return this.http.get<any>(PRODUCTS_URL);
   }
 
-  getFilteredProducts(invoiceId : string, pageNumber : number, pageSize : number) : any{
-    let data = {"invoiceId": invoiceId, "pageNo": pageNumber-1, "pageSize": pageSize};
-    return this.http.get<any>(FILTER_URL,{params: data})
+  getFilteredProducts(invoiceId: string, pageNumber: number, pageSize: number): any {
+    const params = { "invoiceId": invoiceId, "pageNo": (pageNumber - 1).toString(), "pageSize": pageSize.toString() };
+    return this.http.get<any>(FILTER_URL, { params });
   }
 
-  finish(invoiceId : string) : any{
-    return this.http.put(CLOSE_URL+"/"+invoiceId,null).pipe(
-      map((successData : Response)=>{
+  finish(invoiceId: string): any {
+    return this.http.put(`${CLOSE_URL}/${invoiceId}`, null).pipe(
+      map((successData: Response) => {
         console.log(successData); 
         return successData;
       }),
-      map(failureData=>{
+      map(failureData => {
         console.log(failureData);
         return failureData;
       })
     );
   }
 
-  getOpenInvoices(){
-    return this.http.get<any>(OPEN_INVOICE_URL)
+  getOpenInvoices(): Observable<any> {
+    return this.http.get(OPEN_INVOICE_URL);
   }
-
-  
-
-
-
 }
